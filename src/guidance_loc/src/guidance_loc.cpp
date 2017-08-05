@@ -18,8 +18,8 @@
 
 GuidanceLoc::GuidanceLoc() : nh("~")
 {
-    guidance_odom_sub = nh.subscribe("guidance/odom", 1, &GuidanceLoc::guidance_odom_callback, this);
-    guidance_odom_bias_sub = nh.subscribe("guidance/odom_bias", 1, &GuidanceLoc::guidance_odom_bias_callback, this);
+    guidance_odom_sub = nh.subscribe("guidance/odom", 10, &GuidanceLoc::guidance_odom_callback, this);
+    guidance_odom_bias_sub = nh.subscribe("guidance/odom_bias", 10, &GuidanceLoc::guidance_odom_bias_callback, this);
     guidance_odom_calied_pub = nh.advertise<nav_msgs::Odometry>("guidance/odom_calied", 10);
     guidance_cali_srv = nh.advertiseService("guidance/cali", &GuidanceLoc::guidance_cali_callback, this);
 }
@@ -47,9 +47,10 @@ void GuidanceLoc::cali(const nav_msgs::Odometry& g_odom_bias)
 void GuidanceLoc::guidance_odom_callback(const nav_msgs::OdometryConstPtr& g_odom)
 {
     odom = *g_odom;
+    std::cout << "callback" << std::endl;
     if (calied == false)
     {
-        cali(odom_bias);
+        cali(odom);
     }
 }
 
