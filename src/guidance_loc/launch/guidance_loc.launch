@@ -1,0 +1,8 @@
+<launch>
+
+	<!-- run guidance_loc -->
+	<node pkg="guidance_loc" type="guidance_loc_node" name="guidance_loc_node" output="screen">
+  <param name="spin_rate"           type="int"    value="50"/>
+	</node>
+
+</launch>
